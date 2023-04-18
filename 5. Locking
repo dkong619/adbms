@@ -1,0 +1,11 @@
+5. Locking
+
+Start transaction;
+Lock tables employee write, form__data read;
+Select * from employee;
+Select * from for_data;
+Update form_data set name=’shashank3’ where email=’shashank20022801@gmail.com’;
+Update employee set name=’Kaif’ where empID=1;
+Select * from person_salary
+
+ 
