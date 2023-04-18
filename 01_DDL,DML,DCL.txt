@@ -1,0 +1,171 @@
+1. Creating Databases/Table Spaces/Constraints/Keys.
+
+(a)  Create a database using DDL commands for any real-world entity
+      (with all type of constraints – null, not null, primary key, foreign key)
+
+------
+CREATE
+------
+create database college_db;
+use college_db;
+
+create table Students (
+    Registration_Number varchar(6) primary key, 
+    Student_Name varchar(100) not null, 
+    Age integer not null,
+    Class char(10) not null,
+    Phone_Number bigint not null,
+    Email varchar(100) not null,
+    Date_Of_Birth date not null
+);
+
+create table Internals (
+    Subject_Code varchar(100) not null,
+    Subject_Name varchar(100) not null,
+    Semester integer not null, 
+    Test_1 integer not null,
+    Test_2 integer not null, 
+    Activity integer not null,
+    Total integer not null,
+    foreign key (Registration_Number) references Students(Registration_Number)
+);
+
+create table Finals (
+    Subject_Code varchar(100) not null,
+    Subject_Name varchar(100) not null,
+    Semester integer not null, 
+    Theory integer not null,
+    Practicals integer not null, 
+    Total integer not null,
+    Grade varchar(10) not null,
+    foreign key (Registration_Number) references Students(Registration_Number)
+);
+
+create table Department (
+    Department_ID varchar(10) primary key,
+    Department_Name varchar(20) not null,
+    Staff_Strength integer not null,
+    HOD_ID varchar(20) not null
+);
+
+
+create table Staff (
+    Department_ID varchar(20) not null, 
+    Staff_ID varchar(20) primary key,
+    Staff_Name varchar(100) not null,
+    foreign key (Department_ID) references Department(Department_ID)
+);
+
+---------
+DESCRIBE
+---------
+describe Students;
+
+describe Department;
+
+---------
+ALTER
+---------
+alter table Students
+add Gender char(6) not null;
+
+describe Students;
+
+
+
+alter table department
+modify HOD_ID integer not null;
+
+describe Department;
+
+
+---------
+DROP
+---------
+drop table Department;
+
+describe Department;
+
+
+---------
+TRUNCATE
+---------
+truncate table Students;
+
+select * from Students;
+
+(b) Implement DML commands for the above created database on all tables
+
+INSERT
+
+insert into Staff(Department_ID, Staff_ID, Staff_Name) 
+values('SJU01', 'SJU0101', 'Angelina'),
+('SJU01', 'SJU0102', 'Mary'),
+('SJU01', 'SJU0103', 'Karen'),
+('SJU01', 'SJU0104', 'Joseph'),
+('SJU02', 'SJU0201', 'Jonathan'),
+('SJU02','SJU0202','Sanjana'),
+('SJU02','SJU0203','David'),
+('SJU03', 'SJU0301', 'Javier'), 
+('SJU03','SJU0302','Mridula'),
+('SJU03','SJU0303','Sumanth'),
+('SJU03','SJU0304','Josephine'),
+('SJU03','SJU0305','Karim'), 
+('SJU04', 'SJU0401', 'Oindrila'),
+('SJU04','SJU0402','Ila'),
+('SJU04','SJU0403','Swapnil'),
+('SJU04','SJU0404','Meryn'),
+('SJU04','SJU0405','Sapna'),
+('SJU04','SJU0406','Muthoot'),
+('SJU04','SJU0407','Priya');  
+
+---------
+UPDATE
+---------
+update Internals
+set Subject_Name = ‘Theory Of Computation’
+where Subject_Code = ‘C01’;
+
+select * from Internals;
+   
+
+DELETE
+
+delete from Internals
+where Test_1 = 0;
+
+select * from Internals;
+
+ 
+
+
+
+
+
+(c) Implement DCL commands for the above database in all tables
+------------------
+CREATE USER
+------------------
+Create user name@localhost identified by ‘name2838’;
+
+ 
+GRANT
+
+grant all on college_db.* to name@localhost;
+
+show grants for name@localhost;
+
+ 
+
+
+insert into values (‘SJU05’, ‘Big Data Analytics’, 10, ‘H05’);
+
+select * from Dsepartment;
+
+ 
+ 
+REVOKE
+
+revoke all on college_db.* from name@localhost;
+
+show grants for name@localhost;
