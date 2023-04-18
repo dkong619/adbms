@@ -128,9 +128,9 @@ where Subject_Code = ‘C01’;
 
 select * from Internals;
    
-
+---------
 DELETE
-
+---------
 delete from Internals
 where Test_1 = 0;
 
@@ -148,9 +148,9 @@ CREATE USER
 ------------------
 Create user name@localhost identified by ‘name2838’;
 
- 
+--------- 
 GRANT
-
+---------
 grant all on college_db.* to name@localhost;
 
 show grants for name@localhost;
@@ -163,9 +163,9 @@ insert into values (‘SJU05’, ‘Big Data Analytics’, 10, ‘H05’);
 select * from Dsepartment;
 
  
- 
+--------- 
 REVOKE
-
+---------
 revoke all on college_db.* from name@localhost;
 
 show grants for name@localhost;
