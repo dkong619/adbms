@@ -1,0 +1,40 @@
+3. Moving Data.
+a) Demonstrate exporting a database from MySQL
+
+SELECT *
+FROM (
+  SELECT 'id', 'name', 'color', 'price'
+  UNION ALL
+  SELECT id, name, color, price
+  FROM flowers
+) AS data
+INTO OUTFILE '/var/lib/mysql-files/flowersexport.csv'
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+
+ 
+
+Flowersexport.csv
+  
+b) Demonstrate importing a table from another application to MySQL
+
+set GLOBAL local_infile = 1; --Can be set as root only
+exit
+
+> mysql -u 'username' --local-infile=1 --secure-file-priv='' -p 'password'
+--start sql server with local inline enabled
+
+CREATE TABLE flowers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  color VARCHAR(255) NOT NULL,
+  price DECIMAL(10, 2) NOT NULL
+);
+
+LOAD DATA LOCAL INFILE './flowers.csv'
+INTO TABLE flowers
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
