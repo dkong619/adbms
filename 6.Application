@@ -1,0 +1,98 @@
+6. Preparing Application for execution using a front end tool
+(i)	Design a form in HTML
+(ii)	Create a table in MySQL 
+(iii)	Use PHP to connect the content of the form to the MySQL database
+
+Form.html
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Form Submission</title>
+    <style>
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input[type="text"] {
+        padding: 5px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-width: 300px;
+      }
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+      .error {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Form Submission</h1>
+    <form id="myForm" action="/add" method="POST">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name">
+      <span id="nameError" class="error"></span>
+
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email">
+      <span id="emailError" class="error"></span>
+
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
+
+
+
+App.js
+
+const express = require('express');
+const app = express();
+const port = 3000;
+const mysql = require('mysql');
+    var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : 'ChanandlerBong1!',
+    database : 'HTML_Form'
+    });
+    connection.connect((err)=>{
+        console.log("connected");
+    });
+
+app.use(express.urlencoded({ extended: true }))
+app.listen(port);
+app.get('/',(req,res)=>{
+    res.sendFile(__dirname + '/form.html');
+})    
+
+app.post('/add', (req,res)=>{
+    const insertQuery = `INSERT INTO form_details VALUES("${req.body.name}", "${req.body.email}")`;
+    console.log(insertQuery);
+    connection.query(insertQuery, function (error, results, fields) {
+        console.log(error);
+      });
+    res.send("record inserted");
+})
+
+
+
+File.sql
+
+create database HTML_Form;
+use HTML_Form;
+create table form_details(name varchar(50), email varchar(50)) ;
+select * from form_details;
